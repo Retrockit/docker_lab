@@ -35,7 +35,7 @@ SCRIPT
 Vagrant.configure("2") do |config|
   config.vm.provider "libvirt"
   config.vm.box = "roboxes/ubuntu2204"
-  config.vm.network "private_network", ip: "192.168.60.3"
+  config.vm.network "private_network", ip: "192.168.61.3"
   config.vm.provision "shell", inline: $update
   config.vm.provision "shell", inline: $docker
   config.vm.provision "shell", inline: $compose
