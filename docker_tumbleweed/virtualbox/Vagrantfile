@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+##Provisioner Section
+
+#Update Host
+$update = <<SCRIPT
+zypper dup -l -y
+SCRIPT
+#End of script
+
+#Install Docker
+$docker = <<SCRIPT
+zypper in -y --auto-agree-with-licenses docker docker-bash-completion docker-compose
+systemctl enable --now docker.service
+usermod -aG docker vagrant
+SCRIPT
+#End of script
+##End of Provisioner Section
+
+Vagrant.configure("2") do |config|
+  config.vm.provider "virtualbox"
+  config.vm.box = "opensuse/Tumbleweed.x86_64"
+  config.vm.network "private_network", ip: "192.168.60.3"
+  config.vm.provision "shell", inline: $update
+  config.vm.provision "shell", inline: $docker
+end
